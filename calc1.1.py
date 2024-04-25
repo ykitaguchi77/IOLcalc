@@ -243,21 +243,36 @@ class ActivateChromeWindow(QWidget):
    def extract_numbers(self):
        clipboard_text = pyperclip.paste()
        iolpw = self.IOLPW
-       pattern = rf"^{iolpw:g}\s+([-]?\d+\.\d+)\s+([-]?\d+\.\d+)\s+([-]?\d+\.\d+)\s+([-]?\d+\.\d+)\s+([-]?\d+\.\d+)\s+([-]?\d+\.\d+)"
-       match = re.search(pattern, clipboard_text, re.MULTILINE)
+       
+       try:
+            numbers = self.extraacct_iol_data(clipboard_text, iolpw)
+            return numbers
 
-       if match:
-           numbers = match.groups()
-           return numbers
-       else:
-           pattern = rf"^{iolpw:g}\s+([-]?\d+\.?\d*)\s+([-]?\d+\.?\d*)\s+([-]?\d+\.?\d*)\s+([-]?\d+\.?\d*)\s+([-]?\d+\.?\d*)\s+([-]?\d+\.?\d*)"
-           match = re.search(pattern, clipboard_text, re.MULTILINE)
-           
-           if match:
-               numbers = match.groups()
-               return numbers
-           else:
-               return None
+       except:
+            return None
+    
+   def extract_iol_data(text, iolpw):
+    lines = text.split('\n')
+    data = {}
+    current_key = None
+    for line in lines:
+        if 'IOL Power' in line:
+            keys = re.split(r'\s{2,}', line.strip())
+            for key in keys:
+                data[key] = []
+            current_key = keys[0]
+        elif current_key:
+            values = re.split(r'\s{2,}', line.strip())
+            if len(values) == len(keys) and values[0] == str(iolpw):
+                for i, value in enumerate(values):
+                    try:
+                        data[keys[i]].append(float(value))
+                    except ValueError:
+                        data[keys[i]].append(None)
+            else:
+                break
+        print(data)
+    return pd.DataFrame(data)
 
    def select_minimum_id(self):
        try:
