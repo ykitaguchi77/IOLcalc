@@ -123,6 +123,7 @@ class ActivateChromeWindow(QWidget):
     pyautogui.press('tab')
     if not edit_mode:
         pyautogui.press('space')
+        time.sleep(0.5)
         pyautogui.press('down', presses=5)
         pyautogui.press('space')
         time.sleep(1)
@@ -136,6 +137,20 @@ class ActivateChromeWindow(QWidget):
     else:
         pyautogui.press('tab', presses=33)
         pyautogui.press('space')
+    time.sleep(3)
+    try:
+        image_location = pyautogui.locateOnScreen('robot.png')
+        if image_location is not None:
+            left, top, width, height = image_location
+            click_x = left + int(width/2)
+            click_y = top + int(height/2)
+            pyautogui.moveTo(click_x/2, click_y/2)
+            pyautogui.click()
+            pyautogui.click()
+        print("image found")
+    except:
+        print("image not found")
+        pass
 
    def activate_window(self):
        self.activateWindow()
