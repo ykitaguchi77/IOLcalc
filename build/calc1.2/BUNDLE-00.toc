@@ -1,0 +1,3 @@
+([('calc1.2',
+   '/Users/kitaguchi/VScode/IOLcalc-new/dist/calc1.2',
+   'EXECUTABLE')],)

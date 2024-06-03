@@ -26,30 +26,33 @@ class ActivateChromeWindow(QWidget):
        self.link_label.setGeometry(50, 20, 300, 30)
        self.link_label.setOpenExternalLinks(True)
 
+       self.note_label = QLabel("※Cooke C6のチェックを外す", self)
+       self.note_label.setGeometry(50, 40, 300, 30)
+
        self.id_label = QLabel("整理番号を入力してください:", self)
-       self.id_label.setGeometry(50, 50, 300, 30)
+       self.id_label.setGeometry(50, 100, 300, 30)
 
        self.id_input = QLineEdit(self)
-       self.id_input.setGeometry(50, 90, 200, 30)
+       self.id_input.setGeometry(50, 140, 200, 30)
 
        self.minimum_button = QPushButton("Minimum", self)
-       self.minimum_button.setGeometry(250, 90, 100, 30)
+       self.minimum_button.setGeometry(250, 140, 100, 30)
        self.minimum_button.clicked.connect(self.select_minimum_id)
 
        self.show_button = QPushButton("Calculate", self)
-       self.show_button.setGeometry(50, 140, 200, 50)
+       self.show_button.setGeometry(50, 190, 200, 50)
        self.show_button.clicked.connect(self.input_data)
 
        self.edit_button = QPushButton("Edit", self)
-       self.edit_button.setGeometry(50, 210, 200, 50)
+       self.edit_button.setGeometry(50, 260, 200, 50)
        self.edit_button.clicked.connect(self.edit_data)
 
        self.capture_button = QPushButton("Capture", self)
-       self.capture_button.setGeometry(50, 280, 200, 50)
+       self.capture_button.setGeometry(50, 330, 200, 50)
        self.capture_button.clicked.connect(self.capture_result)
 
        self.result_label = QLabel(self)
-       self.result_label.setGeometry(50, 340, 300, 360)
+       self.result_label.setGeometry(50, 390, 300, 360)
        self.result_label.setStyleSheet("font-size: 12px;")
 
    def activate_chrome(self):
@@ -131,10 +134,10 @@ class ActivateChromeWindow(QWidget):
         time.sleep(1)
         pyautogui.press('enter')
         time.sleep(1)
-        pyautogui.press('tab', presses=32)
+        pyautogui.press('tab', presses=32) #もとは32
         pyautogui.press('space')
     else:
-        pyautogui.press('tab', presses=33)
+        pyautogui.press('tab', presses=33) #もとは33
         pyautogui.press('space')
 
    def activate_window(self):
